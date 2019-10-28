@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://moonheart.github.io</id>
+    <title>moonheart 的博客</title>
+    <updated>2019-10-28T05:59:45.664Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://moonheart.github.io"/>
+    <link rel="self" href="https://moonheart.github.io/atom.xml"/>
+    <subtitle>业余搞机 | 音游菜鸟 | 程序员</subtitle>
+    <logo>https://moonheart.github.io/images/avatar.png</logo>
+    <icon>https://moonheart.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2019, moonheart 的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[MIUI10 刷入opengapps]]></title>
+        <id>https://moonheart.github.io/post/miui10-install-opengapps</id>
+        <link href="https://moonheart.github.io/post/miui10-install-opengapps">
+        </link>
+        <updated>2019-10-28T05:56:38.000Z</updated>
+        <content type="html"><![CDATA[<p>MIUI系统中没有带谷歌服务，而手动安装的非系统应用会有一些权限问题，导致奇怪的Bug，于是我考虑刷入opengapps。</p>
+<p>这里我选择的是micro版本。</p>
+<h2 id="注意"><strong>注意</strong></h2>
+<p><strong>刷入opengapps后已经修改了system分区，这时候不能直接开机。因为内核有验证system分区完整性，直接开机会卡米。<br>
+这时需要再刷入Magisk或者SuperSU对内核进行patch，才能正常开机。</strong></p>
+<h2 id="开机向导fc">开机向导FC</h2>
+<p>开机后，此时开机向导已经被替换成了Google了的，这时遇到的第一个问题是开机向导过不去，因为MIUI系统对Android做了一些修改，导致Google的开机向导在在调用一些方法的时候FC。</p>
+<p>需要禁用开机向导才能继续。</p>
+<p>重启进入Recovery，在<code>/system/build.prop</code>中加入如下代码后重启继续。</p>
+<pre><code>ro.setupwizard.mode=DISABLED
+</code></pre>
+<p>或者使用<a href="https://github.com/moonheart/moonheart.github.io/raw/master/files/Disable_SetupWizard.zip">这个Zip包</a>刷入禁用开机向导。</p>
+<h2 id="webview丢失">Webview丢失</h2>
+<p>开机后，很多应用FC，查看日志后发现没有检测到Webview，在开发者选项中查看Webview实现，发现是空的，怎么回事呢？<br>
+因为opengapps替换了MIUI系统自带的WebviewGoogle，导致系统检测不到Webview。</p>
+<p>这时打开opengapps安装包中的<code>gapps-remove.txt</code>文件，找到<code>/system/app/WebViewGoogle</code>这一行，把它删掉或者在前面加一个<code>#</code>注释掉这一行就行了。</p>
+<h2 id="app被覆盖">App被覆盖</h2>
+<p>opengapps会移除一些系统应用，即使它不是stock版本的。这时我们需要使用<a href="https://github.com/opengapps/opengapps/wiki/Advanced-Features-and-Options">配置文件</a>。<br>
+在配置文件中加入不想被覆盖的应用就好了。</p>
+<p>比如日历被移除了，因为micro版本安装了Google日历，需要在配置文件中加入<code>CalendarGoogle</code>来防止MIUI日历被移除。</p>
+<h2 id="权限问题">权限问题</h2>
+<p>如果遇到权限问题，并且无法在系统中给予权限的话，可以参考<a href="https://github.com/opengapps/opengapps/wiki/Notes-for-Android-6.0#workaround-for-advanced-users">这篇官方Wiki</a>进行设置。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MIUI系统修复音频延迟]]></title>
+        <id>https://moonheart.github.io/post/miui_fix_audio_latency</id>
+        <link href="https://moonheart.github.io/post/miui_fix_audio_latency">
+        </link>
+        <updated>2019-10-28T05:55:50.000Z</updated>
+        <content type="html"><![CDATA[<p>在MIUI系统中，在玩某些音游（Arcaea）的时候，需要将延迟调的很高（200~300ms），才能使音画同步，而在原生系统中延迟却非常低（10~30ms）。</p>
+<p>这一现象在我的小米6和小米平板4 plus中都遇到了。</p>
+<p>之后我在Android官方文档中看到关于<a href="https://developer.android.com/ndk/guides/audio/audio-latency?hl=zh-cn">音频延迟时间</a>的说明，其中提到：</p>
+<blockquote>
+<p>当前没有 API 可以在运行时确定 Android 设备上通过任何路径的音频延迟时间。 不过，您可以使用下列硬件功能标记了解设备是否能为延迟时间提供任何保证：</p>
+<ul>
+<li>android.hardware.audio.low_latency 指示 45 毫秒或更短的持续输出延迟时间。</li>
+<li>android.hardware.audio.pro 指示 20 毫秒或更短的持续往返延迟时间。</li>
+</ul>
+</blockquote>
+<p>随后通过搜索，在MIUI论坛中发现了这篇帖子【<a href="http://www.miui.com/thread-9688302-1-1.html">利用android新特性 减低声音延迟</a>】。</p>
+<p>通过对比发现，原生系统中的<code>/vendor/etc/permissions/</code>下有<code>android.hardware.audio.low_latency.xml</code>、<code>android.hardware.audio.pro.xml</code>这两个文件，<br>
+猜测是这两个文件标记了设备是否支持这两个特性，而这也与上文提到的文档中的描述一致。</p>
+<p>手动将这两个文件复制到MIUI系统的<code>/system/vendor/etc/permissions/</code>中后，音频延迟问题解决了。</p>
+<p>猜测：一些应用为了降低音频延迟，会检查设备是否支持高性能音频，如果不支持的话会采用传统的延迟更大的方式进行音频输出。</p>
+<p>我制作了一个<a href="https://github.com/moonheart/moonheart.github.io/raw/master/files/magisk_fix_audio_latency.zip">Magisk模块</a>可以按照文中提供的方式对MIUI的音频延迟进行修复。</p>
+<p>副作用：如果设备运行内存不足，可能会导致这些支持高性能音频的应用的声音卡顿爆音，这也是我在使用原生系统的时候经常遇到的，清理一下后台程序并重启应用就能解决。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[MIUI官方系统deodex MIUISystemUI]]></title>
+        <id>https://moonheart.github.io/post/miuisystemui_deodex</id>
+        <link href="https://moonheart.github.io/post/miuisystemui_deodex">
+        </link>
+        <updated>2018-09-24T05:54:17.000Z</updated>
+        <content type="html"><![CDATA[<p>之前发的修改国际版通知的教程中涉及到了修改MIUISystemUI.apk，好多人说找不到classes.dex文件，因为用的是官方系统。<br>
+但是当时我用的是官改系统，整个系统都是deodex的，所以可以直接修改。</p>
+<p>接下来我会讲解如何官方系统修改MIUISystemUI，理论上适用于其他系统apk（。</p>
+<h2 id="准备工作">准备工作:</h2>
+<ol>
+<li>Windows PC</li>
+<li>baksmali-xxx.jar, smali-xxx.jar，到这里下载最新的 <a href="https://bitbucket.org/JesusFreke/smali/downloads/">https://bitbucket.org/JesusFreke/smali/downloads/</a></li>
+<li>adb的基本操作（推荐将adb和fastboot加入环境变量）</li>
+<li>Java环境（百度去）</li>
+</ol>
+<h2 id="操作步骤">操作步骤：</h2>
+<ol>
+<li>
+<p>手机开启adb调试，连接到电脑，确保驱动正确安装。</p>
+</li>
+<li>
+<p>随便找一个地方建立文件夹，比如【miui】，将下载的baksmali-xxx.jar, smali-xxx.jar复制到这里。</p>
+</li>
+<li>
+<p>启动命令行，进入【miui】文件夹，把需要的文件拉取到电脑上。执行命令：</p>
+</li>
+</ol>
+<pre><code class="language-shell">adb pull /system/framework/
+adb pull /system/priv-app/MiuiSystemUI/MiuiSystemUI.apk
+adb pull /system/priv-app/MiuiSystemUI/oat/arm64/MiuiSystemUI.odex
+</code></pre>
+<ol start="4">
+<li>反编译<code>MiuiSystemUI.odex</code>,会生成一个out目录。执行命令：</li>
+</ol>
+<pre><code class="language-shell">java -jar baksmali-2.2.5.jar x MiuiSystemUI.odex  -d framework/arm64
+</code></pre>
+<ol start="5">
+<li>
+<p>按需修改out目录中的smali文件。如修改国际版通知等等。</p>
+</li>
+<li>
+<p>回编译smali文件成<code>classes.dex</code>, 执行命令：</p>
+</li>
+</ol>
+<pre><code class="language-shell">java -Xmx512M -jar smali-2.2.5.jar a out -o classes.dex
+</code></pre>
+<ol start="7">
+<li>
+<p>用解压缩软件打开<code>MiuiSystemUI.apk</code>,将生成的<code>classes.dex</code>文件拖入其中，你就有一个deodex的<code>MiuiSystemUI.apk</code>了</p>
+</li>
+<li>
+<p>直接替换文件到system或者使用magisk进行替换。</p>
+</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[小米6刷twrp教程]]></title>
+        <id>https://moonheart.github.io/post/sagit-twrp-guide</id>
+        <link href="https://moonheart.github.io/post/sagit-twrp-guide">
+        </link>
+        <updated>2017-10-05T16:00:00.000Z</updated>
+        <content type="html"><![CDATA[<p>准备：电脑，小米6一台，数据线</p>
+<h2 id="1-下载线刷工具">1. 下载线刷工具</h2>
+<p>进入 <a href="http://www.miui.com/shuaji-393.html">http://www.miui.com/shuaji-393.html</a> ，选择<a href="http://bigota.d.miui.com/tools/MiFlashSetup201612220.msi">通用刷机工具点击下载</a>, 然后安装。</p>
+<h2 id="2-下载recovery">2. 下载recovery</h2>
+<p>进入 <a href="https://dl.twrp.me/sagit/">https://dl.twrp.me/sagit/</a> 选择最新的下载</p>
+<h2 id="3-放好recovery文件">3. 放好recovery文件</h2>
+<p>进入刷机工具安装目录， 默认 <code>C:\XiaoMi\XiaoMiFlash\</code>,  然后进入 <code>Source\ThirdParty\Google\Android</code>, 把刚刚下载的<code>twrp-3.1.1-1-sagit.img</code>放到这个目录。</p>
+<h2 id="4-新建刷recovery脚本">4. 新建刷recovery脚本</h2>
+<p>新建文本文件，修改名字为<code>flash_recovery.bat</code>，内容如下</p>
+<pre><code class="language-batch">fastboot flash recovery twrp-3.1.1-1-sagit.img
+fastboot boot twrp-3.1.1-1-sagit.img
+</code></pre>
+<h2 id="5-重启到fastboot">5. 重启到fastboot</h2>
+<p>长按<kbd>音量增</kbd> + <kbd>电源键</kbd> ，等待手机重启进入fastboot，然后将手机链接到电脑。</p>
+<h3 id="6-双击flash_recoverybat文件这时手机会自动重启进入recovery">6. 双击<code>flash_recovery.bat</code>文件，这时手机会自动重启进入recovery。</h3>
+]]></content>
+    </entry>
+</feed>

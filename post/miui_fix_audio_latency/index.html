@@ -1,0 +1,182 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MIUI系统修复音频延迟 | moonheart 的博客</title>
+<meta name="description" content="业余搞机 | 音游菜鸟 | 程序员" />
+<link rel="shortcut icon" href="https://moonheart.github.io/favicon.ico?v=1572242384682">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://moonheart.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://moonheart.github.io">
+  <img class="avatar" src="https://moonheart.github.io/images/avatar.png?v=1572242384682" alt="">
+  </a>
+  <h1 class="site-title">
+    moonheart 的博客
+  </h1>
+  <p class="site-description">
+    业余搞机 | 音游菜鸟 | 程序员
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              MIUI系统修复音频延迟
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-10-28
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://moonheart.github.io/tag/H6k2zg1Br" class="post-tag">
+                  # MIUI
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>在MIUI系统中，在玩某些音游（Arcaea）的时候，需要将延迟调的很高（200~300ms），才能使音画同步，而在原生系统中延迟却非常低（10~30ms）。</p>
+<p>这一现象在我的小米6和小米平板4 plus中都遇到了。</p>
+<p>之后我在Android官方文档中看到关于<a href="https://developer.android.com/ndk/guides/audio/audio-latency?hl=zh-cn">音频延迟时间</a>的说明，其中提到：</p>
+<blockquote>
+<p>当前没有 API 可以在运行时确定 Android 设备上通过任何路径的音频延迟时间。 不过，您可以使用下列硬件功能标记了解设备是否能为延迟时间提供任何保证：</p>
+<ul>
+<li>android.hardware.audio.low_latency 指示 45 毫秒或更短的持续输出延迟时间。</li>
+<li>android.hardware.audio.pro 指示 20 毫秒或更短的持续往返延迟时间。</li>
+</ul>
+</blockquote>
+<p>随后通过搜索，在MIUI论坛中发现了这篇帖子【<a href="http://www.miui.com/thread-9688302-1-1.html">利用android新特性 减低声音延迟</a>】。</p>
+<p>通过对比发现，原生系统中的<code>/vendor/etc/permissions/</code>下有<code>android.hardware.audio.low_latency.xml</code>、<code>android.hardware.audio.pro.xml</code>这两个文件，<br>
+猜测是这两个文件标记了设备是否支持这两个特性，而这也与上文提到的文档中的描述一致。</p>
+<p>手动将这两个文件复制到MIUI系统的<code>/system/vendor/etc/permissions/</code>中后，音频延迟问题解决了。</p>
+<p>猜测：一些应用为了降低音频延迟，会检查设备是否支持高性能音频，如果不支持的话会采用传统的延迟更大的方式进行音频输出。</p>
+<p>我制作了一个<a href="https://github.com/moonheart/moonheart.github.io/raw/master/files/magisk_fix_audio_latency.zip">Magisk模块</a>可以按照文中提供的方式对MIUI的音频延迟进行修复。</p>
+<p>副作用：如果设备运行内存不足，可能会导致这些支持高性能音频的应用的声音卡顿爆音，这也是我在使用原生系统的时候经常遇到的，清理一下后台程序并重启应用就能解决。</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://moonheart.github.io/post/miuisystemui_deodex">
+              <h3 class="post-title">
+                MIUI官方系统deodex MIUISystemUI
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/moonheart" target="_blank">moonheart</a> | 
+  <a class="rss" href="https://moonheart.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
+
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
+
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

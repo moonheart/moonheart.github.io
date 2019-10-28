@@ -1,0 +1,190 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>小米6刷twrp教程 | moonheart 的博客</title>
+<meta name="description" content="业余搞机 | 音游菜鸟 | 程序员" />
+<link rel="shortcut icon" href="https://moonheart.github.io/favicon.ico?v=1572242384682">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://moonheart.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://moonheart.github.io">
+  <img class="avatar" src="https://moonheart.github.io/images/avatar.png?v=1572242384682" alt="">
+  </a>
+  <h1 class="site-title">
+    moonheart 的博客
+  </h1>
+  <p class="site-description">
+    业余搞机 | 音游菜鸟 | 程序员
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              小米6刷twrp教程
+            </h2>
+            <div class="post-info">
+              <span>
+                2017-10-06
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+                <a href="https://moonheart.github.io/tag/A_cstKD-2" class="post-tag">
+                  # 小米6
+                </a>
+              
+                <a href="https://moonheart.github.io/tag/TPlkqixMCy" class="post-tag">
+                  # TWRP
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>准备：电脑，小米6一台，数据线</p>
+<h2 id="1-下载线刷工具">1. 下载线刷工具</h2>
+<p>进入 <a href="http://www.miui.com/shuaji-393.html">http://www.miui.com/shuaji-393.html</a> ，选择<a href="http://bigota.d.miui.com/tools/MiFlashSetup201612220.msi">通用刷机工具点击下载</a>, 然后安装。</p>
+<h2 id="2-下载recovery">2. 下载recovery</h2>
+<p>进入 <a href="https://dl.twrp.me/sagit/">https://dl.twrp.me/sagit/</a> 选择最新的下载</p>
+<h2 id="3-放好recovery文件">3. 放好recovery文件</h2>
+<p>进入刷机工具安装目录， 默认 <code>C:\XiaoMi\XiaoMiFlash\</code>,  然后进入 <code>Source\ThirdParty\Google\Android</code>, 把刚刚下载的<code>twrp-3.1.1-1-sagit.img</code>放到这个目录。</p>
+<h2 id="4-新建刷recovery脚本">4. 新建刷recovery脚本</h2>
+<p>新建文本文件，修改名字为<code>flash_recovery.bat</code>，内容如下</p>
+<pre><code class="language-batch">fastboot flash recovery twrp-3.1.1-1-sagit.img
+fastboot boot twrp-3.1.1-1-sagit.img
+</code></pre>
+<h2 id="5-重启到fastboot">5. 重启到fastboot</h2>
+<p>长按<kbd>音量增</kbd> + <kbd>电源键</kbd> ，等待手机重启进入fastboot，然后将手机链接到电脑。</p>
+<h3 id="6-双击flash_recoverybat文件这时手机会自动重启进入recovery">6. 双击<code>flash_recovery.bat</code>文件，这时手机会自动重启进入recovery。</h3>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1-%E4%B8%8B%E8%BD%BD%E7%BA%BF%E5%88%B7%E5%B7%A5%E5%85%B7">1. 下载线刷工具</a></li>
+<li><a href="#2-%E4%B8%8B%E8%BD%BDrecovery">2. 下载recovery</a></li>
+<li><a href="#3-%E6%94%BE%E5%A5%BDrecovery%E6%96%87%E4%BB%B6">3. 放好recovery文件</a></li>
+<li><a href="#4-%E6%96%B0%E5%BB%BA%E5%88%B7recovery%E8%84%9A%E6%9C%AC">4. 新建刷recovery脚本</a></li>
+<li><a href="#5-%E9%87%8D%E5%90%AF%E5%88%B0fastboot">5. 重启到fastboot</a>
+<ul>
+<li><a href="#6-%E5%8F%8C%E5%87%BBflash_recoverybat%E6%96%87%E4%BB%B6%E8%BF%99%E6%97%B6%E6%89%8B%E6%9C%BA%E4%BC%9A%E8%87%AA%E5%8A%A8%E9%87%8D%E5%90%AF%E8%BF%9B%E5%85%A5recovery">6. 双击<code>flash_recovery.bat</code>文件，这时手机会自动重启进入recovery。</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/moonheart" target="_blank">moonheart</a> | 
+  <a class="rss" href="https://moonheart.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
+
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
+
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>

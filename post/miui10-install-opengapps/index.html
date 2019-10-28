@@ -1,0 +1,198 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MIUI10 刷入opengapps | moonheart 的博客</title>
+<meta name="description" content="业余搞机 | 音游菜鸟 | 程序员" />
+<link rel="shortcut icon" href="https://moonheart.github.io/favicon.ico?v=1572242384682">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://moonheart.github.io/styles/main.css">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://moonheart.github.io">
+  <img class="avatar" src="https://moonheart.github.io/images/avatar.png?v=1572242384682" alt="">
+  </a>
+  <h1 class="site-title">
+    moonheart 的博客
+  </h1>
+  <p class="site-description">
+    业余搞机 | 音游菜鸟 | 程序员
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              MIUI10 刷入opengapps
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-10-28
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://moonheart.github.io/tag/H6k2zg1Br" class="post-tag">
+                  # MIUI
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>MIUI系统中没有带谷歌服务，而手动安装的非系统应用会有一些权限问题，导致奇怪的Bug，于是我考虑刷入opengapps。</p>
+<p>这里我选择的是micro版本。</p>
+<h2 id="注意"><strong>注意</strong></h2>
+<p><strong>刷入opengapps后已经修改了system分区，这时候不能直接开机。因为内核有验证system分区完整性，直接开机会卡米。<br>
+这时需要再刷入Magisk或者SuperSU对内核进行patch，才能正常开机。</strong></p>
+<h2 id="开机向导fc">开机向导FC</h2>
+<p>开机后，此时开机向导已经被替换成了Google了的，这时遇到的第一个问题是开机向导过不去，因为MIUI系统对Android做了一些修改，导致Google的开机向导在在调用一些方法的时候FC。</p>
+<p>需要禁用开机向导才能继续。</p>
+<p>重启进入Recovery，在<code>/system/build.prop</code>中加入如下代码后重启继续。</p>
+<pre><code>ro.setupwizard.mode=DISABLED
+</code></pre>
+<p>或者使用<a href="https://github.com/moonheart/moonheart.github.io/raw/master/files/Disable_SetupWizard.zip">这个Zip包</a>刷入禁用开机向导。</p>
+<h2 id="webview丢失">Webview丢失</h2>
+<p>开机后，很多应用FC，查看日志后发现没有检测到Webview，在开发者选项中查看Webview实现，发现是空的，怎么回事呢？<br>
+因为opengapps替换了MIUI系统自带的WebviewGoogle，导致系统检测不到Webview。</p>
+<p>这时打开opengapps安装包中的<code>gapps-remove.txt</code>文件，找到<code>/system/app/WebViewGoogle</code>这一行，把它删掉或者在前面加一个<code>#</code>注释掉这一行就行了。</p>
+<h2 id="app被覆盖">App被覆盖</h2>
+<p>opengapps会移除一些系统应用，即使它不是stock版本的。这时我们需要使用<a href="https://github.com/opengapps/opengapps/wiki/Advanced-Features-and-Options">配置文件</a>。<br>
+在配置文件中加入不想被覆盖的应用就好了。</p>
+<p>比如日历被移除了，因为micro版本安装了Google日历，需要在配置文件中加入<code>CalendarGoogle</code>来防止MIUI日历被移除。</p>
+<h2 id="权限问题">权限问题</h2>
+<p>如果遇到权限问题，并且无法在系统中给予权限的话，可以参考<a href="https://github.com/opengapps/opengapps/wiki/Notes-for-Android-6.0#workaround-for-advanced-users">这篇官方Wiki</a>进行设置。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E6%B3%A8%E6%84%8F"><strong>注意</strong></a></li>
+<li><a href="#%E5%BC%80%E6%9C%BA%E5%90%91%E5%AF%BCfc">开机向导FC</a></li>
+<li><a href="#webview%E4%B8%A2%E5%A4%B1">Webview丢失</a></li>
+<li><a href="#app%E8%A2%AB%E8%A6%86%E7%9B%96">App被覆盖</a></li>
+<li><a href="#%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98">权限问题</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://moonheart.github.io/post/miui_fix_audio_latency">
+              <h3 class="post-title">
+                MIUI系统修复音频延迟
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/moonheart" target="_blank">moonheart</a> | 
+  <a class="rss" href="https://moonheart.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+  hljs.initHighlightingOnLoad()
+
+  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+  // This should probably be throttled.
+  // Especially because it triggers during smooth scrolling.
+  // https://lodash.com/docs/4.17.10#throttle
+  // You could do like...
+  // window.addEventListener("scroll", () => {
+  //    _.throttle(doThatStuff, 100);
+  // });
+  // Only not doing it here to keep this Pen dependency-free.
+
+  window.addEventListener("scroll", event => {
+    let fromTop = window.scrollY;
+
+    mainNavLinks.forEach((link, index) => {
+      let section = document.getElementById(decodeURI(link.hash).substring(1));
+      let nextSection = null
+      if (mainNavLinks[index + 1]) {
+        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+      }
+      if (section.offsetTop <= fromTop) {
+        if (nextSection) {
+          if (nextSection.offsetTop > fromTop) {
+            link.classList.add("current");
+          } else {
+            link.classList.remove("current");    
+          }
+        } else {
+          link.classList.add("current");
+        }
+      } else {
+        link.classList.remove("current");
+      }
+    });
+  });
+
+</script>
+
+      </div>
+    </div>
+  </body>
+</html>
