@@ -1,133 +1,129 @@
 <html>
-  <head>
-  <meta charset="utf-8" />
+
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>moonheart 的博客</title>
-<meta name="description" content="业余搞机 | 音游菜鸟 | 程序员" />
-<link rel="shortcut icon" href="https://moonheart.github.io/favicon.ico?v=1572242886347">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<title>
+    moonheart 的博客
+</title>
+<link rel="shortcut icon" href="https://moonheart.github.io/favicon.ico?v=1572243309588">
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://moonheart.github.io/styles/main.css">
-
+<!-- js -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://moonheart.github.io/media/js/jquery.sticky-sidebar.min.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
 
 
+</head>
 
-  </head>
-  <body>
+<body>
     <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://moonheart.github.io">
-  <img class="avatar" src="https://moonheart.github.io/images/avatar.png?v=1572242886347" alt="">
-  </a>
-  <h1 class="site-title">
-    moonheart 的博客
-  </h1>
-  <p class="site-description">
-    业余搞机 | 音游菜鸟 | 程序员
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
-  </div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
+        <div class="header">
+    <div class="nav">
+        <div class="logo">
+            <a href="https://moonheart.github.io">
+                <img class="avatar" src="https://moonheart.github.io/images/avatar.png?v=1572243309588" alt="">
+            </a>
+            <div class="site-title">
+                <h1>
+                    moonheart 的博客
+                </h1>
+            </div>
+        </div>
+        <span class="menu-btn fa fa-align-justify"></span>
+        <div class="menu-container">
+            <ul>
+                
+                    
+                            <li>
+                                <a href="/" class="menu">
+                                    首页
+                                </a>
+                            </li>
+                            
+                                
+                    
+                            <li>
+                                <a href="/archives" class="menu">
+                                    归档
+                                </a>
+                            </li>
+                            
+                                
+                    
+                            <li>
+                                <a href="/tags" class="menu">
+                                    标签
+                                </a>
+                            </li>
+                            
+                                
+                    
+                            <li>
+                                <a href="/post/about" class="menu">
+                                    关于
+                                </a>
+                            </li>
+                            
+                                
+            </ul>
+        </div>
+    </div>
 </div>
 
+<script>
+    $(document).ready(function() {
+        $(".menu-btn").click(function() {
+            $(".menu-container").slideToggle();
+        });
+        $(window).resize(function() {
 
-        <div class="tags-container">
-          
-            <a class="tag" href="https://moonheart.github.io/tag/H6k2zg1Br">MIUI</a>
-          
-            <a class="tag" href="https://moonheart.github.io/tag/A_cstKD-2">小米6</a>
-          
-            <a class="tag" href="https://moonheart.github.io/tag/TPlkqixMCy">TWRP</a>
-          
-        </div>
+            if (window.matchMedia('(min-width: 960px)').matches) {
+                $(".menu-container").css('display', 'block')
+            } else {
+                $(".menu-container").css('display', 'none')
+            }
 
-        <div class="site-footer">
+        });
+    });
+</script>
+
+            <div class="tags-container main-container">
+                <div class="tags-group">
+                    
+                        <a class="tags-tag i-tag
+                            i-tag-error" href="https://moonheart.github.io/tag/H6k2zg1Br">
+                            MIUI
+                        </a>
+                        
+                        <a class="tags-tag i-tag
+                            i-tag-error" href="https://moonheart.github.io/tag/A_cstKD-2">
+                            小米6
+                        </a>
+                        
+                        <a class="tags-tag i-tag
+                            i-tag-other_2" href="https://moonheart.github.io/tag/TPlkqixMCy">
+                            TWRP
+                        </a>
+                        
+                </div>
+            </div>
+
+            <div class="site-footer">
   Powered by <a href="https://github.com/moonheart" target="_blank">moonheart</a> | 
   <a class="rss" href="https://moonheart.github.io/atom.xml" target="_blank">RSS</a>
 </div>
 
 <script>
   hljs.initHighlightingOnLoad()
-
-  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
-
-  // This should probably be throttled.
-  // Especially because it triggers during smooth scrolling.
-  // https://lodash.com/docs/4.17.10#throttle
-  // You could do like...
-  // window.addEventListener("scroll", () => {
-  //    _.throttle(doThatStuff, 100);
-  // });
-  // Only not doing it here to keep this Pen dependency-free.
-
-  window.addEventListener("scroll", event => {
-    let fromTop = window.scrollY;
-
-    mainNavLinks.forEach((link, index) => {
-      let section = document.getElementById(decodeURI(link.hash).substring(1));
-      let nextSection = null
-      if (mainNavLinks[index + 1]) {
-        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-      }
-      if (section.offsetTop <= fromTop) {
-        if (nextSection) {
-          if (nextSection.offsetTop > fromTop) {
-            link.classList.add("current");
-          } else {
-            link.classList.remove("current");    
-          }
-        } else {
-          link.classList.add("current");
-        }
-      } else {
-        link.classList.remove("current");
-      }
-    });
-  });
-
 </script>
 
-      </div>
     </div>
-  </body>
+</body>
+
 </html>

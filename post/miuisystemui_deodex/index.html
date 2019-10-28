@@ -1,97 +1,118 @@
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8" />
+<meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MIUI官方系统deodex MIUISystemUI | moonheart 的博客</title>
-<meta name="description" content="业余搞机 | 音游菜鸟 | 程序员" />
-<link rel="shortcut icon" href="https://moonheart.github.io/favicon.ico?v=1572242886347">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<title>
+    MIUI官方系统deodex MIUISystemUI | moonheart 的博客
+</title>
+<link rel="shortcut icon" href="https://moonheart.github.io/favicon.ico?v=1572243309588">
+<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://moonheart.github.io/styles/main.css">
-
+<!-- js -->
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://moonheart.github.io/media/js/jquery.sticky-sidebar.min.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
 
 
+        
+</head>
 
-  </head>
-  <body>
+<body>
     <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://moonheart.github.io">
-  <img class="avatar" src="https://moonheart.github.io/images/avatar.png?v=1572242886347" alt="">
-  </a>
-  <h1 class="site-title">
-    moonheart 的博客
-  </h1>
-  <p class="site-description">
-    业余搞机 | 音游菜鸟 | 程序员
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
-  </div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
+        <div class="header">
+    <div class="nav">
+        <div class="logo">
+            <a href="https://moonheart.github.io">
+                <img class="avatar" src="https://moonheart.github.io/images/avatar.png?v=1572243309588" alt="">
+            </a>
+            <div class="site-title">
+                <h1>
+                    moonheart 的博客
+                </h1>
+            </div>
+        </div>
+        <span class="menu-btn fa fa-align-justify"></span>
+        <div class="menu-container">
+            <ul>
+                
+                    
+                            <li>
+                                <a href="/" class="menu">
+                                    首页
+                                </a>
+                            </li>
+                            
+                                
+                    
+                            <li>
+                                <a href="/archives" class="menu">
+                                    归档
+                                </a>
+                            </li>
+                            
+                                
+                    
+                            <li>
+                                <a href="/tags" class="menu">
+                                    标签
+                                </a>
+                            </li>
+                            
+                                
+                    
+                            <li>
+                                <a href="/post/about" class="menu">
+                                    关于
+                                </a>
+                            </li>
+                            
+                                
+            </ul>
+        </div>
+    </div>
 </div>
 
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              MIUI官方系统deodex MIUISystemUI
-            </h2>
-            <div class="post-info">
-              <span>
-                2018-09-24
-              </span>
-              <span>
-                2 min read
-              </span>
-              
-                <a href="https://moonheart.github.io/tag/H6k2zg1Br" class="post-tag">
-                  # MIUI
-                </a>
-              
-            </div>
-            
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <p>之前发的修改国际版通知的教程中涉及到了修改MIUISystemUI.apk，好多人说找不到classes.dex文件，因为用的是官方系统。<br>
+<script>
+    $(document).ready(function() {
+        $(".menu-btn").click(function() {
+            $(".menu-container").slideToggle();
+        });
+        $(window).resize(function() {
+
+            if (window.matchMedia('(min-width: 960px)').matches) {
+                $(".menu-container").css('display', 'block')
+            } else {
+                $(".menu-container").css('display', 'none')
+            }
+
+        });
+    });
+</script>
+
+            <div id="main-content" class="post-detail main-container">
+                <!-- left -->
+                <div id="content" class="main-container-left">
+                    <article class="post i-card">
+                        <h2 class="post-title">
+                            MIUI官方系统deodex MIUISystemUI
+                        </h2>
+                        <div class="post-info">
+                            <time class="post-time">2018-09-24</time>
+                            
+                                <a href="https://moonheart.github.io/tag/H6k2zg1Br" class="post-tag i-tag
+                            i-tag-">
+                            #MIUI
+                        </a>
+                                
+                        </div>
+                        
+                                <div class="post-content">
+                                    <p>之前发的修改国际版通知的教程中涉及到了修改MIUISystemUI.apk，好多人说找不到classes.dex文件，因为用的是官方系统。<br>
 但是当时我用的是官改系统，整个系统都是deodex的，所以可以直接修改。</p>
 <p>接下来我会讲解如何官方系统修改MIUISystemUI，理论上适用于其他系统apk（。</p>
 <h2 id="准备工作">准备工作:</h2>
@@ -141,9 +162,33 @@ adb pull /system/priv-app/MiuiSystemUI/oat/arm64/MiuiSystemUI.odex
 </li>
 </ol>
 
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
+                                </div>
+                    </article>
+                    <!--  -->
+                    
+                        <div class="next-post">
+                            <div class="next">下一篇</div>
+                            <a href="https://moonheart.github.io/post/sagit-twrp-guide">
+                                <h3 class="post-title">
+                                    小米6刷twrp教程
+                                </h3>
+                            </a>
+                        </div>
+                        
+                            <div id="disqus_thread"></div>
+                            <div id="gitalk-container"></div>
+                </div>
+                <!-- middle -->
+                <div class="main-container-middle"></div>
+                <!-- right -->
+                <div id="sidebar" class="main-container-right">
+                    
+                        <!-- toc -->
+                        
+    <div class="toc-card i-card ">
+        <div class="toc-title i-card-title">目录</div>
+        <div class="toc-content">
+            <ul class="markdownIt-TOC">
 <li>
 <ul>
 <li><a href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C">准备工作:</a></li>
@@ -152,71 +197,60 @@ adb pull /system/priv-app/MiuiSystemUI/oat/arm64/MiuiSystemUI.odex
 </li>
 </ul>
 
-              </div>
-            </div>
-          </article>
         </div>
+        <script>
+            function locateCatelogList() {
+                /*获取文章目录集合,可通过:header过滤器*/
+                var alis = $('.post-content :header');
+                /*获取侧边栏目录列表集合**/
+                var sidebar_alis = $('.markdownIt-TOC a');
+                /*获取滚动条到顶部的距离*/
+                var scroll_height = $(window).scrollTop();
+                for (var i = 0; i < alis.length; i++) {
+                    /*获取锚点集合中的元素分别到顶点的距离*/
+                    var a_height = $(alis[i]).offset().top;
+                    if (a_height < scroll_height) {
+                        /*高亮显示*/
+                        sidebar_alis.removeClass('on');
+                        $(sidebar_alis[i]).addClass('on');
+                    }
+                }
+            }
+            $(function() {
+                /*绑定滚动事件 */
+                $(window).bind('scroll', locateCatelogList);
+            });
+        </script>
+    </div>
+    
+                            
 
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://moonheart.github.io/post/sagit-twrp-guide">
-              <h3 class="post-title">
-                小米6刷twrp教程
-              </h3>
-            </a>
-          </div>
-        
+                </div>
 
-        
 
-        <div class="site-footer">
+
+
+            </div>
+
+
+            <div class="site-footer">
   Powered by <a href="https://github.com/moonheart" target="_blank">moonheart</a> | 
   <a class="rss" href="https://moonheart.github.io/atom.xml" target="_blank">RSS</a>
 </div>
 
 <script>
   hljs.initHighlightingOnLoad()
-
-  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
-
-  // This should probably be throttled.
-  // Especially because it triggers during smooth scrolling.
-  // https://lodash.com/docs/4.17.10#throttle
-  // You could do like...
-  // window.addEventListener("scroll", () => {
-  //    _.throttle(doThatStuff, 100);
-  // });
-  // Only not doing it here to keep this Pen dependency-free.
-
-  window.addEventListener("scroll", event => {
-    let fromTop = window.scrollY;
-
-    mainNavLinks.forEach((link, index) => {
-      let section = document.getElementById(decodeURI(link.hash).substring(1));
-      let nextSection = null
-      if (mainNavLinks[index + 1]) {
-        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-      }
-      if (section.offsetTop <= fromTop) {
-        if (nextSection) {
-          if (nextSection.offsetTop > fromTop) {
-            link.classList.add("current");
-          } else {
-            link.classList.remove("current");    
-          }
-        } else {
-          link.classList.add("current");
-        }
-      } else {
-        link.classList.remove("current");
-      }
-    });
-  });
-
 </script>
 
-      </div>
+
     </div>
-  </body>
+    <script>
+        $('#sidebar').stickySidebar({
+            topSpacing: 80,
+            // bottomSpacing: 60
+        });
+    </script>
+    
+</body>
+
 </html>
