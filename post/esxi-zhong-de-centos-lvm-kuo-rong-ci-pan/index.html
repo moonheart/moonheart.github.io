@@ -5,7 +5,7 @@
 <meta name="description" content="" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>
-    小米6刷twrp教程 | moonheart 的博客
+    esxi 中的 CentOS lvm扩容磁盘 | moonheart 的博客
 </title>
 <link rel="shortcut icon" href="https://moonheart.github.io/favicon.ico?v=1578883525202">
 <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous"> -->
@@ -106,44 +106,108 @@
                 <div id="content" class="main-container-left">
                     <article class="post i-card">
                         <h2 class="post-title">
-                            小米6刷twrp教程
+                            esxi 中的 CentOS lvm扩容磁盘
                         </h2>
                         <div class="post-info">
-                            <time class="post-time">2017-10-06</time>
+                            <time class="post-time">2020-01-13</time>
                             
-                                <a href="https://moonheart.github.io/tag/A_cstKD-2" class="post-tag i-tag
-                            i-tag-other_3">
-                            #小米6
-                        </a>
-                                
-                                <a href="https://moonheart.github.io/tag/TPlkqixMCy" class="post-tag i-tag
-                            i-tag-info">
-                            #TWRP
-                        </a>
-                                
                         </div>
                         
                                 <div class="post-content">
-                                    <p>准备：电脑，小米6一台，数据线</p>
-<h2 id="1-下载线刷工具">1. 下载线刷工具</h2>
-<p>进入 <a href="http://www.miui.com/shuaji-393.html">http://www.miui.com/shuaji-393.html</a> ，选择<a href="http://bigota.d.miui.com/tools/MiFlashSetup201612220.msi">通用刷机工具点击下载</a>, 然后安装。</p>
-<h2 id="2-下载recovery">2. 下载recovery</h2>
-<p>进入 <a href="https://dl.twrp.me/sagit/">https://dl.twrp.me/sagit/</a> 选择最新的下载</p>
-<h2 id="3-放好recovery文件">3. 放好recovery文件</h2>
-<p>进入刷机工具安装目录， 默认 <code>C:\XiaoMi\XiaoMiFlash\</code>,  然后进入 <code>Source\ThirdParty\Google\Android</code>, 把刚刚下载的<code>twrp-3.1.1-1-sagit.img</code>放到这个目录。</p>
-<h2 id="4-新建刷recovery脚本">4. 新建刷recovery脚本</h2>
-<p>新建文本文件，修改名字为<code>flash_recovery.bat</code>，内容如下</p>
-<pre><code class="language-batch">fastboot flash recovery twrp-3.1.1-1-sagit.img
-fastboot boot twrp-3.1.1-1-sagit.img
+                                    <ol start="0">
+<li>首先在 vCenter 控制面板中增加磁盘容量</li>
+<li>使用 fdisk 扩容分区<pre><code class="language-bash">[root@server ~]# fdisk /dev/sda
+ Command (m for help): p
+ 
+ Disk /dev/sda: 171.8 GB, 171798691840 bytes, 335544320 sectors
+ Units = sectors of 1 * 512 = 512 bytes
+ Sector size (logical/physical): 512 bytes / 512 bytes
+ I/O size (minimum/optimal): 512 bytes / 512 bytes
+ Disk label type: dos
+ Disk identifier: 0x000dbca9
+ 
+    Device Boot      Start         End      Blocks   Id  System
+ /dev/sda1   *        2048     2099199     1048576   83  Linux
+ /dev/sda2         2099200   167772159    82836480   83  Linux
+ 
+ Command (m for help): d
+ Partition number (1,2, default 2): 2
+ Partition 2 is deleted
+ 
+ Command (m for help): n
+ Partition type:
+    p   primary (1 primary, 0 extended, 3 free)
+    e   extended
+ Select (default p): p
+ Partition number (2-4, default 2):
+ First sector (2099200-335544319, default 2099200):
+ Using default value 2099200
+ Last sector, +sectors or +size{K,M,G} (2099200-335544319, default 335544319):
+ Using default value 335544319
+ Partition 2 of type Linux and of size 159 GiB is set
+ 
+ Command (m for help): p
+ 
+ Disk /dev/sda: 171.8 GB, 171798691840 bytes, 335544320 sectors
+ Units = sectors of 1 * 512 = 512 bytes
+ Sector size (logical/physical): 512 bytes / 512 bytes
+ I/O size (minimum/optimal): 512 bytes / 512 bytes
+ Disk label type: dos
+ Disk identifier: 0x000dbca9
+ 
+    Device Boot      Start         End      Blocks   Id  System
+ /dev/sda1   *        2048     2099199     1048576   83  Linux
+ /dev/sda2         2099200   335544319   166722560   83  Linux
+ 
+ Command (m for help): w
+ The partition table has been altered!
+ 
+ Calling ioctl() to re-read partition table.
+ 
+ WARNING: Re-reading the partition table failed with error 16: Device or   resource busy
+ The kernel still uses the old table. The new table will be used at
+ the next reboot or after you run partprobe(8) or kpartx(8)
+ Syncing disks.
 </code></pre>
-<h2 id="5-重启到fastboot">5. 重启到fastboot</h2>
-<p>长按<kbd>音量增</kbd> + <kbd>电源键</kbd> ，等待手机重启进入fastboot，然后将手机链接到电脑。</p>
-<h3 id="6-双击flash_recoverybat文件这时手机会自动重启进入recovery">6. 双击<code>flash_recovery.bat</code>文件，这时手机会自动重启进入recovery。</h3>
+</li>
+<li>使用 pvresize<pre><code class="language-bash">[root@server /]# pvresize /dev/sda2
+Physical volume &quot;/dev/sda2&quot; changed
+1 physical volume(s) resized or updated / 0 physical volume(s) not resized
+</code></pre>
+</li>
+<li>使用 lvextend 扩容扩容 lvm<pre><code class="language-bash">[root@server /]# lvextend -l +100%FREE /dev/mapper/centos-root
+Size of logical volume centos/root changed from 75.12 GiB (19231 extents) to 155.12 GiB (39711 extents).
+Logical volume centos/root successfully resized.
+</code></pre>
+</li>
+<li>使用 xfs_growfs 而不是 resize2fs<pre><code class="language-bash">[root@server /]# xfs_growfs /dev/centos/root
+ meta-data=/dev/mapper/centos-root isize=512    agcount=9, agsize=2301440 blks
+          =                       sectsz=512   attr=2, projid32bit=1
+          =                       crc=1        finobt=0 spinodes=0
+ data     =                       bsize=4096   blocks=19692544, imaxpct=25
+          =                       sunit=0      swidth=0 blks
+ naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+ log      =internal               bsize=4096   blocks=4495, version=2
+          =                       sectsz=512   sunit=0 blks, lazy-count=1
+ realtime =none                   extsz=4096   blocks=0, rtextents=0
+ data blocks changed from 19692544 to 40664064
+</code></pre>
+</li>
+</ol>
 
                                 </div>
                     </article>
                     <!--  -->
                     
+                        <div class="next-post">
+                            <div class="next">下一篇</div>
+                            <a href="https://moonheart.github.io/post/miui10-install-opengapps">
+                                <h3 class="post-title">
+                                    MIUI10 刷入opengapps
+                                </h3>
+                            </a>
+                        </div>
+                        
                             <div id="disqus_thread"></div>
                             <div id="gitalk-container"></div>
                 </div>
@@ -152,54 +216,32 @@ fastboot boot twrp-3.1.1-1-sagit.img
                 <!-- right -->
                 <div id="sidebar" class="main-container-right">
                     
-                        <!-- toc -->
-                        
-    <div class="toc-card i-card ">
-        <div class="toc-title i-card-title">目录</div>
-        <div class="toc-content">
-            <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#1-%E4%B8%8B%E8%BD%BD%E7%BA%BF%E5%88%B7%E5%B7%A5%E5%85%B7">1. 下载线刷工具</a></li>
-<li><a href="#2-%E4%B8%8B%E8%BD%BDrecovery">2. 下载recovery</a></li>
-<li><a href="#3-%E6%94%BE%E5%A5%BDrecovery%E6%96%87%E4%BB%B6">3. 放好recovery文件</a></li>
-<li><a href="#4-%E6%96%B0%E5%BB%BA%E5%88%B7recovery%E8%84%9A%E6%9C%AC">4. 新建刷recovery脚本</a></li>
-<li><a href="#5-%E9%87%8D%E5%90%AF%E5%88%B0fastboot">5. 重启到fastboot</a>
-<ul>
-<li><a href="#6-%E5%8F%8C%E5%87%BBflash_recoverybat%E6%96%87%E4%BB%B6%E8%BF%99%E6%97%B6%E6%89%8B%E6%9C%BA%E4%BC%9A%E8%87%AA%E5%8A%A8%E9%87%8D%E5%90%AF%E8%BF%9B%E5%85%A5recovery">6. 双击<code>flash_recovery.bat</code>文件，这时手机会自动重启进入recovery。</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+                                <!-- id-card -->
+                                
+    <div class="id_card i-card">
+        <div class="id_card-avatar" style="background-image: url(https://moonheart.github.io/images/avatar.png?v=1578883525202)">
+        </div>
+        <h1 class="id_card-title">
+            moonheart 的博客
+        </h1>
+        <h2 class="id_card-description">
+            业余搞机 | 音游菜鸟 | 程序员
+        </h2>
+        <!--  -->
+        <div class="id_card-sns">
+            <!-- github -->
+            
+                    <!-- twitter -->
+                    
+                            <!-- weibo -->
+                            
+                                    <!-- facebook -->
+                                    
 
         </div>
-        <script>
-            function locateCatelogList() {
-                /*获取文章目录集合,可通过:header过滤器*/
-                var alis = $('.post-content :header');
-                /*获取侧边栏目录列表集合**/
-                var sidebar_alis = $('.markdownIt-TOC a');
-                /*获取滚动条到顶部的距离*/
-                var scroll_height = $(window).scrollTop();
-                for (var i = 0; i < alis.length; i++) {
-                    /*获取锚点集合中的元素分别到顶点的距离*/
-                    var a_height = $(alis[i]).offset().top;
-                    if (a_height < scroll_height) {
-                        /*高亮显示*/
-                        sidebar_alis.removeClass('on');
-                        $(sidebar_alis[i]).addClass('on');
-                    }
-                }
-            }
-            $(function() {
-                /*绑定滚动事件 */
-                $(window).bind('scroll', locateCatelogList);
-            });
-        </script>
     </div>
     
-                            
+                                    
 
                 </div>
 
