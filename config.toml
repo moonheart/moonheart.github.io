@@ -1,0 +1,4 @@
+baseURL = 'http://example.org/'
+languageCode = 'zh-cn'
+title = '月心月士的博客'
+theme = "ananke"
