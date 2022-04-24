@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 月心月士的博客</title><link>http://example.org/posts/</link><description>Recent content in Posts on 月心月士的博客</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sun, 24 Apr 2022 01:10:23 +0800</lastBuildDate><atom:link href="http://example.org/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>在 linux 系统通过修改 DSDT 修复 S3 睡眠</title><link>http://example.org/posts/linux-dsdt-fix-s3/</link><pubDate>Sun, 24 Apr 2022 01:10:23 +0800</pubDate><guid>http://example.org/posts/linux-dsdt-fix-s3/</guid><description>解决方案参考 https://dev.to/epassaro/fix-suspend-issues-on-dell-7405-2-in-1-3l1b
+与原文不同的是，他的设备是 Dell 7405 2-in-1 而我的是 Thinkbook 14P, 所以 DSDT 修改略有不同。
+反编译出 dsl 之后，找到如下位置：
+Name (NOS3, Package (0x04) { 0x03, 0x03, 0x00, 0x00 }) 替换为
+Name (_S3, Package (0x04) { 0x03, 0x03, 0x00, 0x00 }) 同时将 DefinitionBlock (&amp;quot;&amp;quot;, &amp;quot;DSDT&amp;quot;, 1, &amp;quot;LENOVO&amp;quot;, &amp;quot;AMD&amp;quot;, 0x00001000) 替换为 DefinitionBlock (&amp;quot;&amp;quot;, &amp;quot;DSDT&amp;quot;, 1, &amp;quot;LENOVO&amp;quot;, &amp;quot;AMD&amp;quot;, 0x00001001)，这里是加了个版本号，让内核可以识别到。</description></item><item><title>在 aspnet core 中使用类似 javaagent 的方式注入程序集</title><link>http://example.org/posts/use-assembly-inject-in-aspnetcore-like-javaagent/</link><pubDate>Mon, 14 Feb 2022 10:31:23 +0800</pubDate><guid>http://example.org/posts/use-assembly-inject-in-aspnetcore-like-javaagent/</guid><description>https://docs.microsoft.com/en-us/aspnet/core/fundamentals/host/platform-specific-configuration?view=aspnetcore-6.0#activation
+通过这种方式, 可以实现不对原有项目做任何更改, 可以直接对已发布好的程序文件进行自定义程序集注入. 可以使用在 k8s 的 init-container 中注入统一的日志, 配置, 健康检查, 服务注册, 等等.
+需要配置三个关键的环境变量:
+使用 ASPNETCORE_HOSTINGSTARTUPASSEMBLIES 指定要使用的程序集 使用 DOTNET_ADDITIONAL_DEPS 指定要添加的依赖 使用 DOTNET_SHARED_STORE 来指定依赖查找的目录 另一个额外注意点是, 我们注入的程序集需要支持主程序的版本.</description></item><item><title>esxi 中的 CentOS lvm扩容磁盘</title><link>http://example.org/posts/esxi-zhong-de-centos-lvm-kuo-rong-ci-pan/</link><pubDate>Mon, 13 Jan 2020 21:21:00 +0800</pubDate><guid>http://example.org/posts/esxi-zhong-de-centos-lvm-kuo-rong-ci-pan/</guid><description>首先在 vCenter 控制面板中增加磁盘容量并重启系统 root@server ~]# fdisk /dev/sda Command (m for help): p Disk /dev/sda: 171.8 GB, 171798691840 bytes, 335544320 sectors Units = sectors of 1 * 512 = 512 bytes Sector size (logical/physical): 512 bytes / 512 bytes I/O size (minimum/optimal): 512 bytes / 512 bytes Disk label type: dos Disk identifier: 0x000dbca9 Device Boot Start End Blocks Id System /dev/sda1 * 2048 2099199 1048576 83 Linux /dev/sda2 2099200 167772159 82836480 83 Linux Command (m for help): d Partition number (1,2, default 2): 2 Partition 2 is deleted Command (m for help): n Partition type: p primary (1 primary, 0 extended, 3 free) e extended Select (default p): p Partition number (2-4, default 2): First sector (2099200-335544319, default 2099200): Using default value 2099200 Last sector, +sectors or +size{K,M,G} (2099200-335544319, default 335544319): Using default value 335544319 Partition 2 of type Linux and of size 159 GiB is set Command (m for help): p Disk /dev/sda: 171.</description></item><item><title>MIUI10 刷入 opengapps</title><link>http://example.org/posts/miui10-install-opengapps/</link><pubDate>Mon, 28 Jan 2019 17:20:23 +0800</pubDate><guid>http://example.org/posts/miui10-install-opengapps/</guid><description>MIUI系统中没有带谷歌服务，而手动安装的非系统应用会有一些权限问题，导致奇怪的Bug，于是我考虑刷入opengapps。
+这里我选择的是micro版本。
+注意 刷入opengapps后已经修改了system分区，这时候不能直接开机。因为内核有验证system分区完整性，直接开机会卡米。这时需要再刷入Magisk或者SuperSU对内核进行patch，才能正常开机。
+开机向导FC 开机后，此时开机向导已经被替换成了Google了的，这时遇到的第一个问题是开机向导过不去，因为MIUI系统对Android做了一些修改，导致Google的开机向导在在调用一些方法的时候FC。
+需要禁用开机向导才能继续。
+重启进入Recovery，在/system/build.prop 中加入如下代码后重启继续。
+ro.setupwizard.mode=DISABLED 或者使用 这个Zip包 刷入禁用开机向导。
+Webview丢失 开机后，很多应用FC，查看日志后发现没有检测到Webview，在开发者选项中查看Webview实现，发现是空的，怎么回事呢？因为opengapps替换了MIUI系统自带的WebviewGoogle，导致系统检测不到Webview。
+这时打开opengapps安装包中的 gapps-remove.txt 文件，找到 /system/app/WebViewGoogle 这一行，把它删掉或者在前面加一个#注释掉这一行就行了。
+App被覆盖 opengapps会移除一些系统应用，即使它不是stock版本的。这时我们需要使用配置文件。在配置文件中加入不想被覆盖的应用就好了。
+比如日历被移除了，因为micro版本安装了Google日历，需要在配置文件中加入 CalendarGoogle 来防止MIUI日历被移除。
+权限问题 如果遇到权限问题，并且无法在系统中给予权限的话，可以参考这篇官方Wiki进行设置。</description></item><item><title>MIUI 系统修复音频延迟</title><link>http://example.org/posts/miui_fix_audio_latency/</link><pubDate>Fri, 25 Jan 2019 23:19:23 +0800</pubDate><guid>http://example.org/posts/miui_fix_audio_latency/</guid><description>在MIUI系统中，在玩某些音游（Arcaea）的时候，需要将延迟调的很高（200~300ms），才能使音画同步，而在原生系统中延迟却非常低（10~30ms）。
+这一现象在我的小米6和小米平板4 plus中都遇到了。
+之后我在Android官方文档中看到关于音频延迟时间的说明，其中提到：
+当前没有 API 可以在运行时确定 Android 设备上通过任何路径的音频延迟时间。 不过，您可以使用下列硬件功能标记了解设备是否能为延迟时间提供任何保证：android.hardware.audio.low_latency 指示 45 毫秒或更短的持续输出延迟时间。 android.hardware.audio.pro 指示 20 毫秒或更短的持续往返延迟时间。
+随后通过搜索，在MIUI论坛中发现了这篇帖子【利用android新特性 减低声音延迟】。
+通过对比发现，原生系统中的/vendor/etc/permissions/下有android.hardware.audio.low_latency.xml、android.hardware.audio.pro.xml这两个文件，猜测是这两个文件标记了设备是否支持这两个特性，而这也与上文提到的文档中的描述一致。
+手动将这两个文件复制到MIUI系统的/system/vendor/etc/permissions/中后，音频延迟问题解决了。
+猜测：一些应用为了降低音频延迟，会检查设备是否支持高性能音频，如果不支持的话会采用传统的延迟更大的方式进行音频输出。
+我制作了一个Magisk模块可以按照文中提供的方式对MIUI的音频延迟进行修复。
+副作用：如果设备运行内存不足，可能会导致这些支持高性能音频的应用的声音卡顿爆音，这也是我在使用原生系统的时候经常遇到的，清理一下后台程序并重启应用就能解决。</description></item><item><title>MIUI 官方系统 deodex MIUI SystemUI</title><link>http://example.org/posts/miuisystemui_deodex/</link><pubDate>Mon, 24 Sep 2018 23:18:23 +0800</pubDate><guid>http://example.org/posts/miuisystemui_deodex/</guid><description>之前发的修改国际版通知的教程中涉及到了修改MIUISystemUI.apk，好多人说找不到classes.dex文件，因为用的是官方系统。但是当时我用的是官改系统，整个系统都是deodex的，所以可以直接修改。
+接下来我会讲解如何官方系统修改MIUISystemUI，理论上适用于其他系统apk（。
+准备工作: Windows PC baksmali-xxx.jar, smali-xxx.jar，到这里下载最新的 https://bitbucket.org/JesusFreke/smali/downloads/ adb的基本操作（推荐将adb和fastboot加入环境变量） Java环境（百度去） 操作步骤： 手机开启adb调试，连接到电脑，确保驱动正确安装。 随便找一个地方建立文件夹，比如【miui】，将下载的baksmali-xxx.jar, smali-xxx.jar复制到这里。 启动命令行，进入【miui】文件夹，把需要的文件拉取到电脑上。执行命令： 反编译MiuiSystemUI.odex,会生成一个out目录。执行命令： 按需修改out目录中的smali文件。如修改国际版通知等等。 回编译smali文件成classes.dex, 执行命令： 用解压缩软件打开MiuiSystemUI.apk,将生成的classes.dex文件拖入其中，你就有一个deodex的MiuiSystemUI.apk了 直接替换文件到system或者使用magisk进行替换。</description></item><item><title>小米 6 刷 twrp 教程</title><link>http://example.org/posts/sagit-twrp-guide/</link><pubDate>Fri, 06 Oct 2017 22:14:23 +0800</pubDate><guid>http://example.org/posts/sagit-twrp-guide/</guid><description>准备：电脑，小米6一台，数据线
+下载线刷工具 进入 http://www.miui.com/shuaji-393.html ，选择通用刷机工具点击下载, 然后安装。
+下载recovery 进入 https://dl.twrp.me/sagit/ 选择最新的下载
+放好recovery文件 进入刷机工具安装目录， 默认 C:\XiaoMi\XiaoMiFlash, 然后进入 Source\ThirdParty\Google\Android, 把刚刚下载的twrp-3.1.1-1-sagit.img放到这个目录。asad
+新建刷recovery脚本 新建文本文件，修改名字为flashrecovery.bat，内容如下
+fastboot flash recovery twrp-3.1.1-1-sagit.img fastboot boot twrp-3.1.1-1-sagit.img
+重启到fastboot 长按音量增 + 电源键 ，等待 手机重启进入fastboot，然后将手机链接到电脑。
+双击flash_recovery.bat文件，这时手机会自动重启进入recovery。</description></item></channel></rss>

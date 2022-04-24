@@ -1,0 +1,39 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>MIUI 系统修复音频延迟 | 月心月士的博客</title><meta name=viewport content="width=device-width,minimum-scale=1"><meta name=description content="在MIUI系统中，在玩某些音游（Arcaea）的时候，需要将延迟调的很高（200~300ms），才能使音画同步，而在原生系统中延迟却非常低（10~30ms）。
+这一现象在我的小米6和小米平板4 plus中都遇到了。
+之后我在Android官方文档中看到关于音频延迟时间的说明，其中提到：
+ 当前没有 API 可以在运行时确定 Android 设备上通过任何路径的音频延迟时间。 不过，您可以使用下列硬件功能标记了解设备是否能为延迟时间提供任何保证：android.hardware.audio.low_latency 指示 45 毫秒或更短的持续输出延迟时间。 android.hardware.audio.pro 指示 20 毫秒或更短的持续往返延迟时间。
+ 随后通过搜索，在MIUI论坛中发现了这篇帖子【利用android新特性 减低声音延迟】。
+通过对比发现，原生系统中的/vendor/etc/permissions/下有android.hardware.audio.low_latency.xml、android.hardware.audio.pro.xml这两个文件，猜测是这两个文件标记了设备是否支持这两个特性，而这也与上文提到的文档中的描述一致。
+手动将这两个文件复制到MIUI系统的/system/vendor/etc/permissions/中后，音频延迟问题解决了。
+猜测：一些应用为了降低音频延迟，会检查设备是否支持高性能音频，如果不支持的话会采用传统的延迟更大的方式进行音频输出。
+我制作了一个Magisk模块可以按照文中提供的方式对MIUI的音频延迟进行修复。
+副作用：如果设备运行内存不足，可能会导致这些支持高性能音频的应用的声音卡顿爆音，这也是我在使用原生系统的时候经常遇到的，清理一下后台程序并重启应用就能解决。"><meta name=generator content="Hugo 0.97.3"><meta name=robots content="noindex, nofollow"><link rel=stylesheet href=/ananke/css/main.min.css><meta property="og:title" content="MIUI 系统修复音频延迟"><meta property="og:description" content="在MIUI系统中，在玩某些音游（Arcaea）的时候，需要将延迟调的很高（200~300ms），才能使音画同步，而在原生系统中延迟却非常低（10~30ms）。
+这一现象在我的小米6和小米平板4 plus中都遇到了。
+之后我在Android官方文档中看到关于音频延迟时间的说明，其中提到：
+ 当前没有 API 可以在运行时确定 Android 设备上通过任何路径的音频延迟时间。 不过，您可以使用下列硬件功能标记了解设备是否能为延迟时间提供任何保证：android.hardware.audio.low_latency 指示 45 毫秒或更短的持续输出延迟时间。 android.hardware.audio.pro 指示 20 毫秒或更短的持续往返延迟时间。
+ 随后通过搜索，在MIUI论坛中发现了这篇帖子【利用android新特性 减低声音延迟】。
+通过对比发现，原生系统中的/vendor/etc/permissions/下有android.hardware.audio.low_latency.xml、android.hardware.audio.pro.xml这两个文件，猜测是这两个文件标记了设备是否支持这两个特性，而这也与上文提到的文档中的描述一致。
+手动将这两个文件复制到MIUI系统的/system/vendor/etc/permissions/中后，音频延迟问题解决了。
+猜测：一些应用为了降低音频延迟，会检查设备是否支持高性能音频，如果不支持的话会采用传统的延迟更大的方式进行音频输出。
+我制作了一个Magisk模块可以按照文中提供的方式对MIUI的音频延迟进行修复。
+副作用：如果设备运行内存不足，可能会导致这些支持高性能音频的应用的声音卡顿爆音，这也是我在使用原生系统的时候经常遇到的，清理一下后台程序并重启应用就能解决。"><meta property="og:type" content="article"><meta property="og:url" content="http://example.org/posts/miui_fix_audio_latency/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2019-01-25T23:19:23+08:00"><meta property="article:modified_time" content="2019-01-25T23:19:23+08:00"><meta itemprop=name content="MIUI 系统修复音频延迟"><meta itemprop=description content="在MIUI系统中，在玩某些音游（Arcaea）的时候，需要将延迟调的很高（200~300ms），才能使音画同步，而在原生系统中延迟却非常低（10~30ms）。
+这一现象在我的小米6和小米平板4 plus中都遇到了。
+之后我在Android官方文档中看到关于音频延迟时间的说明，其中提到：
+ 当前没有 API 可以在运行时确定 Android 设备上通过任何路径的音频延迟时间。 不过，您可以使用下列硬件功能标记了解设备是否能为延迟时间提供任何保证：android.hardware.audio.low_latency 指示 45 毫秒或更短的持续输出延迟时间。 android.hardware.audio.pro 指示 20 毫秒或更短的持续往返延迟时间。
+ 随后通过搜索，在MIUI论坛中发现了这篇帖子【利用android新特性 减低声音延迟】。
+通过对比发现，原生系统中的/vendor/etc/permissions/下有android.hardware.audio.low_latency.xml、android.hardware.audio.pro.xml这两个文件，猜测是这两个文件标记了设备是否支持这两个特性，而这也与上文提到的文档中的描述一致。
+手动将这两个文件复制到MIUI系统的/system/vendor/etc/permissions/中后，音频延迟问题解决了。
+猜测：一些应用为了降低音频延迟，会检查设备是否支持高性能音频，如果不支持的话会采用传统的延迟更大的方式进行音频输出。
+我制作了一个Magisk模块可以按照文中提供的方式对MIUI的音频延迟进行修复。
+副作用：如果设备运行内存不足，可能会导致这些支持高性能音频的应用的声音卡顿爆音，这也是我在使用原生系统的时候经常遇到的，清理一下后台程序并重启应用就能解决。"><meta itemprop=datePublished content="2019-01-25T23:19:23+08:00"><meta itemprop=dateModified content="2019-01-25T23:19:23+08:00"><meta itemprop=wordCount content="24"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="MIUI 系统修复音频延迟"><meta name=twitter:description content="在MIUI系统中，在玩某些音游（Arcaea）的时候，需要将延迟调的很高（200~300ms），才能使音画同步，而在原生系统中延迟却非常低（10~30ms）。
+这一现象在我的小米6和小米平板4 plus中都遇到了。
+之后我在Android官方文档中看到关于音频延迟时间的说明，其中提到：
+ 当前没有 API 可以在运行时确定 Android 设备上通过任何路径的音频延迟时间。 不过，您可以使用下列硬件功能标记了解设备是否能为延迟时间提供任何保证：android.hardware.audio.low_latency 指示 45 毫秒或更短的持续输出延迟时间。 android.hardware.audio.pro 指示 20 毫秒或更短的持续往返延迟时间。
+ 随后通过搜索，在MIUI论坛中发现了这篇帖子【利用android新特性 减低声音延迟】。
+通过对比发现，原生系统中的/vendor/etc/permissions/下有android.hardware.audio.low_latency.xml、android.hardware.audio.pro.xml这两个文件，猜测是这两个文件标记了设备是否支持这两个特性，而这也与上文提到的文档中的描述一致。
+手动将这两个文件复制到MIUI系统的/system/vendor/etc/permissions/中后，音频延迟问题解决了。
+猜测：一些应用为了降低音频延迟，会检查设备是否支持高性能音频，如果不支持的话会采用传统的延迟更大的方式进行音频输出。
+我制作了一个Magisk模块可以按照文中提供的方式对MIUI的音频延迟进行修复。
+副作用：如果设备运行内存不足，可能会导致这些支持高性能音频的应用的声音卡顿爆音，这也是我在使用原生系统的时候经常遇到的，清理一下后台程序并重启应用就能解决。"></head><body class="ma0 avenir bg-near-white"><header><div class=bg-black><nav class="pv3 ph3 ph4-ns" role=navigation><div class="flex-l justify-between items-center center"><a href=/ class="f3 fw2 hover-white no-underline white-90 dib">月心月士的博客</a><div class="flex-l items-center"><div class=ananke-socials></div></div></div></nav></div></header><main class=pb7 role=main><article class="flex-l flex-wrap justify-between mw8 center ph3"><header class="mt4 w-100"><aside class="instapaper_ignoref b helvetica tracked">POSTS</aside><div id=sharing class="mt3 ananke-socials"></div><h1 class="f1 athelas mt3 mb1">MIUI 系统修复音频延迟</h1><time class="f6 mv4 dib tracked" datetime=2019-01-25T23:19:23+08:00>January 25, 2019</time></header><div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><p>在MIUI系统中，在玩某些音游（Arcaea）的时候，需要将延迟调的很高（200~300ms），才能使音画同步，而在原生系统中延迟却非常低（10~30ms）。</p><p>这一现象在我的小米6和小米平板4 plus中都遇到了。</p><p>之后我在Android官方文档中看到关于<a href="https://developer.android.com/ndk/guides/audio/audio-latency?hl=zh-cn">音频延迟时间</a>的说明，其中提到：</p><blockquote><p>当前没有 API 可以在运行时确定 Android 设备上通过任何路径的音频延迟时间。 不过，您可以使用下列硬件功能标记了解设备是否能为延迟时间提供任何保证：
+android.hardware.audio.low_latency 指示 45 毫秒或更短的持续输出延迟时间。
+android.hardware.audio.pro 指示 20 毫秒或更短的持续往返延迟时间。</p></blockquote><p>随后通过搜索，在MIUI论坛中发现了这篇帖子【<a href=http://www.miui.com/thread-9688302-1-1.html>利用android新特性 减低声音延迟</a>】。</p><p>通过对比发现，原生系统中的<code>/vendor/etc/permissions/</code>下有<code>android.hardware.audio.low_latency.xml</code>、<code>android.hardware.audio.pro.xml</code>这两个文件，猜测是这两个文件标记了设备是否支持这两个特性，而这也与上文提到的文档中的描述一致。</p><p>手动将这两个文件复制到MIUI系统的<code>/system/vendor/etc/permissions/</code>中后，音频延迟问题解决了。</p><p>猜测：一些应用为了降低音频延迟，会检查设备是否支持高性能音频，如果不支持的话会采用传统的延迟更大的方式进行音频输出。</p><p>我制作了一个<a href=https://github.com/moonheart/moonheart.github.io/raw/master/files/magisk_fix_audio_latency.zip>Magisk模块</a>可以按照文中提供的方式对MIUI的音频延迟进行修复。</p><p>副作用：如果设备运行内存不足，可能会导致这些支持高性能音频的应用的声音卡顿爆音，这也是我在使用原生系统的时候经常遇到的，清理一下后台程序并重启应用就能解决。</p><ul class=pa0></ul><div class="mt6 instapaper_ignoref"></div></div><aside class="w-30-l mt6-l"></aside></article></main><footer class="bg-black bottom-0 w-100 pa3" role=contentinfo><div class="flex justify-between"><a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href=http://example.org/>&copy; 月心月士的博客 2022</a><div><div class=ananke-socials></div></div></div></footer></body></html>
