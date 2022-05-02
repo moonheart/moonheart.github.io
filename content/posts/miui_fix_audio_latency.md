@@ -22,6 +22,6 @@ android.hardware.audio.low_latency 指示 45 毫秒或更短的持续输出延�
 
 猜测：一些应用为了降低音频延迟，会检查设备是否支持高性能音频，如果不支持的话会采用传统的延迟更大的方式进行音频输出。
 
-我制作了一个[Magisk模块](https://github.com/moonheart/moonheart.github.io/raw/master/files/magisk_fix_audio_latency.zip)可以按照文中提供的方式对MIUI的音频延迟进行修复。
+我制作了一个[Magisk模块](https://www.moonheartmoon.com/files/magisk_fix_audio_latency.zip)可以按照文中提供的方式对MIUI的音频延迟进行修复。
 
 副作用：如果设备运行内存不足，可能会导致这些支持高性能音频的应用的声音卡顿爆音，这也是我在使用原生系统的时候经常遇到的，清理一下后台程序并重启应用就能解决。
