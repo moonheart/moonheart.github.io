@@ -65,7 +65,7 @@ xDS 上的控制平面），它经过验证是否符合定义的 Proxy-Wasm 接�
 到 Proxy-Wasm 调用，因此这些接口与本机（C++）Envoy 中使用的接口非常相似
 扩展，拥抱事件驱动的编程模型。
 
-![Wasm-in-Envoy](/assets/WebAssembly-in-Envoy.svg)
+![Wasm-in-Envoy](WebAssembly-in-Envoy.svg)
 
 ## 运行时
 
