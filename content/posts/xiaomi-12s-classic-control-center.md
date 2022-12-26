@@ -1,6 +1,6 @@
 ---
 title: "Xiaomi 12s Ultra 恢复经典控制中心"
-date: 2020-12-24T22:00:00+08:00
+date: 2022-12-24T22:00:00+08:00
 draft: false
 ---
 
