@@ -16,12 +16,14 @@ logcat -b events | grep am_kill
 
 ## 添加下列 props
 
-### mms 是MiuiMemoryService 的缩写，这条是设置后台app数量上限，默认是100以下
+### mms 配置
+
+mms 是 MiuiMemoryService 的缩写，这条是设置后台app数量上限，默认是100以下
 ```
 persist.sys.mms.bg_apps_limit=1000
 ```
 
-### 这三条是内存压力控制开关
+### 内存压力控制开关
 ```
 persist.sys.spc.enabled=false
 persist.sys.spc.extra_free_enable=false
