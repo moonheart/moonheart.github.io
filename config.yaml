@@ -51,3 +51,7 @@ menu:
     - name: Search
       url: search/
       weight: 10
+    - name: About
+      url: about/
+      weight: 11
+      
