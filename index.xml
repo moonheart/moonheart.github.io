@@ -69,4 +69,6 @@ App被覆盖 opengapps会移除一些系统应用，即使它不是stock版本�
 新建刷recovery脚本 新建文本文件，修改名字为flashrecovery.bat，内容如下
 fastboot flash recovery twrp-3.1.1-1-sagit.img fastboot boot twrp-3.1.1-1-sagit.img
 重启到fastboot 长按音量增 + 电源键 ，等待 手机重启进入fastboot，然后将手机链接到电脑。
-双击flash_recovery.bat文件，这时手机会自动重启进入recovery。</description></item></channel></rss>
+双击flash_recovery.bat文件，这时手机会自动重启进入recovery。</description></item><item><title>关于我</title><link>https://www.moonheartmoon.com/about/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.moonheartmoon.com/about/</guid><description>专业技能 熟悉 Kubernetes，有丰富的运维和开发经验 熟悉云监控，熟悉 prometheus、grafana、jaeger、APM，有监控平台搭建经验 熟悉 Istio 服务网格、Envoy，有上层应用开发经验 熟悉 CI/CD、Gitlab CI、docker，有交付系统设计和开发经验 熟悉 Linux 操作、能编写 Shell 脚本，熟悉 tcpdump、iptables 等排障工具 熟悉 Nginx 配置和 Lua 插件开发，有防火墙系统和降级系统开发经验 熟悉阿里云平台和服务如 RDS、ECS、OSS、SLS、FC、ACK、SLB 熟悉微服务架构，配置中心、服务发现，有传统应用微服务化经验 熟悉 C# 和 Go，同时对 Java、JavaScript、Python、Lua、Vue 有开发经验 英语读写能力较强，有 CET4 热爱开源，跟进社区动态，有开源社区贡献如 OpenTelemetry 工作经历 xxxx公司 2015.9 ~ 2023.2
+基于 Istio 的全链路流量治理系统 为实现微服务治理，基于 Istio 的流量治理功能，抽象出一个符合内部架构的流量泳道概念。我作为唯一开发人员开发了 Kubernetes operator 和后台系统用于管理 CRD，实现对 Kubernetes 和 Istio 资源的操作。 同时开发了一个 Envoy 的 Wasm 插件实现了无侵入的流量标签透传，开发人员可无需任何代码修改即可接入，为此对 Envoy 的 WASM host 进行了修改，重新编译 Envoy 和 Istio。 最终实现了一套全链路流量治理系统，包含灰度发布、熔断限流等功能，从流量入口生成的标识信息可以层层传递到内部的服务。同时在运维系统中提供了易用的页面给开发人员使用。
+服务于开发人员的自助运维系统 为解决微服务化过程中的开发和运维效率问题，基于 GitLab + Kubernetes 搭建了一套 CI/CD 系统，同时基于 ASP.</description></item></channel></rss>
