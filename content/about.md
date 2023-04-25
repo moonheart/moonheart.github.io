@@ -37,6 +37,6 @@ xxxx公司 2015.9 ~ 2023.2
 	目前四个实例稳定支持整个集团亿级日流量，减少前端报错 90% 以上。
 
 4. **可观测性基础设施**
-	为解决线上**可观测性**问题，针对内部 C#+Java 多技术栈清空，使用 dd-trace + opentelemetry-collector + prometheus 作为数据搜集，Grafana 作为数据展示，jaeger 作为 **APM** 分析端构建了一套完整的可观测性基础设施，实现 metrics+logging+tracing 三要素分析。
+	为解决线上**可观测性**问题，针对内部 C#+Java 多技术栈情况，使用 dd-trace + opentelemetry-collector + prometheus 作为数据搜集，Grafana 作为数据展示，jaeger 作为 **APM** 分析端构建了一套完整的可观测性基础设施，实现 metrics+logging+tracing 三要素分析。
 	为满足内部需求，对 dd-trace 的 Java 和 C# agent、opentelemetry-collector 等开源组件进行了**定制化开发**，实现了运行时 trace/statsd 数据采集开关、自定义传播头等功能，涉及到 javaagent 修改、aspnet core 代码注入。
 	同时结合 Kubernetes 的动态准入控制，通过控制容器 entrypoint，实现了自动化注入 APM agent、控制日志格式和等级，开发人员无需修改代码即可接入。
